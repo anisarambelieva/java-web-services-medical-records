@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<h4>Create Sick Leave</h4>
+<div class="col-6">
+    <form action="#" th:action="@{/sick-leaves/create}" th:object="${sickLeave}" method="post">
+        <!-- Start Date -->
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input class="form-control" type="date" th:field="*{startDate}" id="startDate" required>
+        </div>
+
+        <!-- Number of Days -->
+        <div class="form-group">
+            <label for="countDays">Number of Days</label>
+            <input class="form-control" type="number" th:field="*{countDays}" id="countDays" min="1" required>
+        </div>
+
+        <!-- Exam (Pre-Filled from Query Parameter) -->
+        <div class="form-group">
+            <label for="examId">Exam</label>
+            <select class="form-control" th:field="*{examId}" id="examId" required>
+                <option th:each="exam : ${exams}" th:selected="${exam.id == #request.getParameter('examId')}"
+                        th:value="${exam.id}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Doctor -->
+        <div class="form-group">
+            <label for="doctorId">Doctor</label>
+            <select class="form-control" th:field="*{doctorId}" id="doctorId" required>
+                <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"></option>
+            </select>
+        </div>
+
+        <!-- Patient -->
+        <div class="form-group">
+            <label for="patientId">Patient</label>
+            <select class="form-control" th:field="*{patientId}" id="patientId" required>
+                <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.name}"></option>
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Create Sick Leave</button>
+    </form>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>
