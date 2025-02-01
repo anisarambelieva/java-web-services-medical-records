@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+
+<h2>Patient Information</h2>
+
+<p><strong>Name:</strong> <span th:text="${patient.name}"></span></p>
+<p><strong>PIN:</strong> <span th:text="${patient.pin}"></span></p>
+<p><strong>Insurance Paid Date:</strong> <span th:text="${patient.paidInsuranceDate}"></span></p>
+
+<h4>Diagnosis History</h4>
+<ul>
+    <li th:each="diagnosis : ${diagnosisHistory}" th:text="${diagnosis}"></li>
+</ul>
+
+<h4>Doctors Visited</h4>
+<ul>
+    <li th:each="doctor : ${doctorsVisited}" th:text="${doctor}"></li>
+</ul>
+
+<h4>Sick Leaves</h4>
+<ul>
+    <li th:each="sickLeave : ${sickLeaves}" th:text="${sickLeave}"></li>
+</ul>
+
+<a href="/patients"><button>Back to Patients</button></a>
+
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

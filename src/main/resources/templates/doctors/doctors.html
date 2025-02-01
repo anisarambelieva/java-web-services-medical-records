@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<h4>Doctors:</h4>
+<div class="col-6">
+    <h3 th:unless="${doctors} and ${doctors.size()}">There are no doctors!</h3>
+    <table th:if="${doctors.size()>0}" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Specialty</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="doctor : ${doctors}">
+            <td th:text="${doctor.id}"></td>
+            <td th:text="${doctor.name}"></td>
+            <td th:text="${doctor.specialty}"></td>
+            <td>
+                <a class="btn btn-info" th:href="@{'/doctors/edit-doctor/'+${doctor.id}}">Edit</a>
+            </td>
+            <td>
+                <a class="btn btn-danger" th:href="@{'/doctors/delete/'+${doctor.id}}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-6 mt-3">
+    <a class="btn btn-primary" th:href="@{/doctors/create-doctor}">Add New Doctor</a>
+</div>
+
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

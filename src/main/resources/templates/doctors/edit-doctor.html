@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<h4>Edit Doctor</h4>
+<div class="col-6">
+    <form action="#" th:action="@{/doctors/update/{id}(id=${doctor.id})}" th:object="${doctor}" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" th:field="*{name}" placeholder="Name" id="name">
+        </div>
+
+        <div class="form-group">
+            <label for="specialty">Specialty</label>
+            <select class="form-control" th:field="*{specialty}" id="specialty">
+                <option th:each="specialty : ${specialties}"
+                        th:value="${specialty}"
+                        th:text="${specialty}"
+                        th:selected="${specialty == doctor.specialty}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Doctor</button>
+    </form>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>
