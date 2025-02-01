@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+<div class="container mt-4">
+  <h4>All Sick Leaves</h4>
+  <div class="col-12">
+    <h3 th:unless="${sickLeaves} and ${sickLeaves.size()}">There are no sick leaves!</h3>
+    <table th:if="${sickLeaves.size() > 0}" class="table table-hover">
+      <thead>
+      <tr>
+        <th>Start Date</th>
+        <th>Count Days</th>
+        <th>Doctor</th>
+        <th>Patient</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="sickLeave : ${sickLeaves}">
+        <td th:text="${sickLeave.startDate}"></td>
+        <td th:text="${sickLeave.countDays}"></td>
+        <td th:text="${sickLeave.doctorName != null ? sickLeave.doctorName : 'Not Assigned'}"></td>
+        <td th:text="${sickLeave.patientName != null ? sickLeave.patientName : 'Not Assigned'}"></td>
+        <td>
+          <a class="btn btn-info" th:href="@{'/sick-leaves/edit/' + ${sickLeave.id}}">Edit</a>
+          <a class="btn btn-danger" th:href="@{'/sick-leaves/delete/' + ${sickLeave.id}}">Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="col-6 mt-3">
+  <a class="btn btn-primary" th:href="@{/sick-leaves/create}">Add New Sick Leave</a>
+</div>
+
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+
+<h4>Create Exam</h4>
+<div class="col-6">
+    <form action="#" th:action="@{/exams/create}" th:object="${exam}" method="post">
+
+        <!-- Doctor Selection -->
+        <div class="form-group">
+            <label for="doctor">Doctor</label>
+            <select class="form-control" id="doctor" th:field="*{doctorId}" required>
+                <option value="">Select Doctor</option>
+                <option th:each="doctor : ${doctors}"
+                        th:value="${doctor.id}"
+                        th:text="${doctor.name}">
+                </option>
+            </select>
+            <span class="text-danger" th:if="${#fields.hasErrors('doctorId')}" th:errors="*{doctorId}">Doctor Error</span>
+        </div>
+
+        <!-- Patient Selection -->
+        <div class="form-group">
+            <label for="patient">Patient</label>
+            <select class="form-control" id="patient" th:field="*{patientId}" required>
+                <option value="">Select Patient</option>
+                <option th:each="patient : ${patients}"
+                        th:value="${patient.id}"
+                        th:text="${patient.name}">
+                </option>
+            </select>
+            <span class="text-danger" th:if="${#fields.hasErrors('patientId')}" th:errors="*{patientId}">Patient Error</span>
+        </div>
+
+        <!-- Diagnosis Selection (Optional) -->
+        <div class="form-group">
+            <label for="diagnosis">Diagnosis</label>
+            <select class="form-control" id="diagnosis" th:field="*{diagnosisId}">
+                <option value="">Select Diagnosis (Optional)</option>
+                <option th:each="diagnosis : ${diagnoses}"
+                        th:value="${diagnosis.id}"
+                        th:text="${diagnosis.name}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Exam Date -->
+        <div class="form-group">
+            <label for="examDate">Exam Date</label>
+            <input class="form-control" type="date" th:field="*{date}" id="examDate" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Create Exam</button>
+    </form>
+</div>
+
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>
