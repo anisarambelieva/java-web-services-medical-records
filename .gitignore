@@ -1,0 +1,91 @@
+# Compiled class files
+*.class
+target/
+build/
+out/
+
+# Logs
+*.log
+logs/
+*.log.*
+hs_err_pid*
+
+# Maven
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+target/
+
+# Gradle
+.gradle
+build/
+.gradle/
+gradle-app.setting
+gradle.properties
+gradle-wrapper.jar
+gradle-wrapper.properties
+!gradle-wrapper.jar
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+
+# Node & Frontend (if using npm/yarn)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Database files
+*.h2.db
+*.mv.db
+*.sql
+*.sqlite
+
+# Spring Boot specific
+*.war
+*.jar
+!src/main/**/*.jar  # Exclude compiled JARs but not source files
+
+# Environment & Configuration files
+.env
+*.env
+.env.local
+.env.development
+.env.production
+.env.test
+application.properties
+application.yml
+application-*.properties
+application-*.yml
+
+# Docker
+docker-compose.yml
+.dockerignore
+
+# Secrets & Credentials
+*.key
+*.pem
+*.p12
+*.jks
+*.crt
+*.cer
+*.der
+
+# Lombok generated files
+.lombok
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Coverage & test reports
+coverage/
+jacoco/
+*.lcov
+test-results/
