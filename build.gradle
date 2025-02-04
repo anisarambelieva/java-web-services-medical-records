@@ -31,10 +31,10 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.mockito:mockito-core'
+	testImplementation 'org.mockito:mockito-core:5.6.0'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+	jvmArgs += ["--add-opens", "java.base/java.lang=ALL-UNNAMED"]
 }

@@ -44,14 +44,17 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public UpdateDoctorDTO updateDoctor(UpdateDoctorDTO doctor, long id) {
-        return mapperUtil.getModelMapper()
-                .map(this.doctorRepository.findById(id)
-                    .map(doctor1 -> {
-                        doctor1.setName(doctor.getName());
-                        doctor1.setSpecialty(doctor.getSpecialty());
-                        return this.doctorRepository.save(doctor1);
-                }), UpdateDoctorDTO.class);
+        Doctor existingDoctor = this.doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor with id=" + id + " not found!"));
+
+        existingDoctor.setName(doctor.getName());
+        existingDoctor.setSpecialty(doctor.getSpecialty());
+
+        Doctor updatedDoctor = this.doctorRepository.save(existingDoctor);
+
+        return mapperUtil.getModelMapper().map(updatedDoctor, UpdateDoctorDTO.class);
     }
+
 
     @Override
     public void deleteDoctor(long id) {
