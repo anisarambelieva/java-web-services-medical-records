@@ -1,4 +1,4 @@
-package com.cscb869_medical_records.service.impl;
+package com.cscb869_medical_records.service.Impl;
 
 import com.cscb869_medical_records.data.entity.Doctor;
 import com.cscb869_medical_records.data.entity.Exam;

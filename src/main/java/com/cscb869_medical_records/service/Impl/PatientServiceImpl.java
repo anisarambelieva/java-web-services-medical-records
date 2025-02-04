@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class PatientServiceImpl implements PatientService {
     private final PatientRepository patientRepository;
     private final ExamRepository examRepository;
-    private final SickLeaveRepository sickLeaveRepository;
+    private final SickLeaveRepositowry sickLeaveRepository;
     private final MapperUtil mapperUtil;
 
     @Override
