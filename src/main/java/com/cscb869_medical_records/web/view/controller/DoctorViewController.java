@@ -3,8 +3,11 @@ package com.cscb869_medical_records.web.view.controller;
 import com.cscb869_medical_records.data.entity.Doctor;
 import com.cscb869_medical_records.data.entity.Specialty;
 import com.cscb869_medical_records.dto.doctor.CreateDoctorDTO;
+import com.cscb869_medical_records.dto.doctor.DoctorDTO;
 import com.cscb869_medical_records.dto.doctor.UpdateDoctorDTO;
+import com.cscb869_medical_records.dto.exam.ExamDTO;
 import com.cscb869_medical_records.service.DoctorService;
+import com.cscb869_medical_records.service.ExamService;
 import com.cscb869_medical_records.util.MapperUtil;
 import com.cscb869_medical_records.web.view.controller.model.doctor.CreateDoctorViewModel;
 import com.cscb869_medical_records.web.view.controller.model.doctor.DoctorViewModel;
@@ -22,6 +25,7 @@ import java.util.List;
 @RequestMapping("/doctors")
 public class DoctorViewController {
     private final DoctorService doctorService;
+    private final ExamService examService;
     private final MapperUtil mapperUtil;
 
     @GetMapping
@@ -72,5 +76,18 @@ public class DoctorViewController {
     public String deleteDoctor(@PathVariable int id) {
         this.doctorService.deleteDoctor(id);
         return "redirect:/doctors";
+    }
+
+    @GetMapping("/{id}/info")
+    public String getDoctorInfo(@PathVariable Long id, Model model) {
+        DoctorDTO doctor = doctorService.getDoctor(id);
+        int examCount = examService.getExamCountByDoctor(id);
+        List<ExamDTO> exams = examService.getExaminationsByDoctor(id);
+
+        model.addAttribute("doctor", doctor);
+        model.addAttribute("examCount", examCount);
+        model.addAttribute("exams", exams);
+
+        return "/doctors/doctor-info";
     }
 }

@@ -1,6 +1,7 @@
 package com.cscb869_medical_records.web.view.controller;
 
 import com.cscb869_medical_records.data.entity.Diagnosis;
+import com.cscb869_medical_records.data.entity.Patient;
 import com.cscb869_medical_records.dto.diagnosis.UpdateDiagnosisDTO;
 import com.cscb869_medical_records.service.DiagnosisService;
 import com.cscb869_medical_records.util.MapperUtil;
@@ -64,5 +65,16 @@ public class DiagnosisViewController {
     public String deleteDiagnosis(@PathVariable long id) {
         this.diagnosisService.deleteDiagnosis(id);
         return "redirect:/diagnoses";
+    }
+
+    @GetMapping("/{id}/info")
+    public String getDiagnosisInfo(@PathVariable long id, Model model) {
+        Diagnosis diagnosis = diagnosisService.getDiagnosis(id);
+        List<Patient> patients = diagnosisService.getPatientsWithDiagnosis(id);
+
+        model.addAttribute("diagnosis", diagnosis);
+        model.addAttribute("patients", patients);
+
+        return "diagnoses/diagnosis-info";
     }
 }

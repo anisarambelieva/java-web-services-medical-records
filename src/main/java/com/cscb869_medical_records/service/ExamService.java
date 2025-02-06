@@ -13,4 +13,7 @@ public interface ExamService {
     CreateExamDTO createExamination(CreateExamDTO exam);
     UpdateExamDTO updateExamination(UpdateExamDTO exam, long id);
     void deleteExamination(long id);
+    String getMostCommonDiagnosis();
+    int getExamCountByDoctor(long doctorId);
+    List<ExamDTO> getExaminationsByDoctor(Long doctorId);
 }

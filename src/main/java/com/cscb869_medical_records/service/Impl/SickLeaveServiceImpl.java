@@ -91,4 +91,28 @@ public class SickLeaveServiceImpl implements SickLeaveService {
         }
         sickLeaveRepository.deleteById(id);
     }
+
+    @Override
+    public String getDoctorWithMostSickLeaves() {
+        List<Object[]> results = sickLeaveRepository.findTopDoctorBySickLeaves();
+
+        if (results.isEmpty()) {
+            return "No sick leaves issued yet";
+        }
+
+        Object[] topDoctorData = results.get(0);
+        return topDoctorData[0] + " (Total " + topDoctorData[1] + ")";
+    }
+
+    @Override
+    public String getMonthWithMostSickLeaves() {
+        List<Object[]> results = sickLeaveRepository.findTopMonthBySickLeaves();
+
+        if (results.isEmpty()) {
+            return "No sick leaves issued yet";
+        }
+
+        Object[] topMonthData = results.get(0);
+        return topMonthData[0] + " (Total " + topMonthData[1] + ")";
+    }
 }

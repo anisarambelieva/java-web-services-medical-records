@@ -2,9 +2,11 @@ package com.cscb869_medical_records.service.Impl;
 
 import com.cscb869_medical_records.data.entity.Doctor;
 import com.cscb869_medical_records.data.repo.DoctorRepository;
+import com.cscb869_medical_records.data.repo.ExamRepository;
 import com.cscb869_medical_records.dto.doctor.CreateDoctorDTO;
 import com.cscb869_medical_records.dto.doctor.DoctorDTO;
 import com.cscb869_medical_records.dto.doctor.UpdateDoctorDTO;
+import com.cscb869_medical_records.dto.exam.ExamDTO;
 import com.cscb869_medical_records.service.DoctorService;
 import com.cscb869_medical_records.util.MapperUtil;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +15,14 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
+    private final ExamRepository examRepository;
     private final MapperUtil mapperUtil;
 
     @Override
@@ -101,4 +105,19 @@ public class DoctorServiceImpl implements DoctorService {
 
         return doctorVisitCountMap;
     }
+
+    @Override
+    public List<ExamDTO> getExamsByDoctor(long doctorId) {
+        return examRepository.findByDoctorId(doctorId).stream()
+                .map(exam -> {
+                    ExamDTO dto = new ExamDTO();
+                    dto.setId(exam.getId());
+                    dto.setDate(exam.getDate());
+                    dto.setPatientName(exam.getPatient() != null ? exam.getPatient().getName() : "Unknown Patient");
+                    dto.setDiagnosisName(exam.getDiagnosis() != null ? exam.getDiagnosis().getName() : "No Diagnosis");
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
 }

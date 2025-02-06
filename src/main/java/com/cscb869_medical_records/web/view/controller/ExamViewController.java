@@ -31,10 +31,12 @@ public class ExamViewController {
     private final MapperUtil mapperUtil;
 
     @GetMapping
-    public String getExams(Model model) {
-        List<ExamViewModel> exams = mapperUtil
-                .mapList(this.examService.getExaminations(), ExamViewModel.class);
+    public String getMostCommonExams(Model model) {
+        List<ExamViewModel> exams = mapperUtil.mapList(this.examService.getExaminations(), ExamViewModel.class);
+        String mostCommonDiagnosis = examService.getMostCommonDiagnosis();
+
         model.addAttribute("exams", exams);
+        model.addAttribute("mostCommonDiagnosis", mostCommonDiagnosis);
         return "/exams/exams.html";
     }
 
@@ -70,12 +72,12 @@ public class ExamViewController {
         updateExamDTO.setDate(exam.getDate());
         updateExamDTO.setPatientId(exam.getPatientId());
         updateExamDTO.setDoctorId(exam.getDoctorId());
-        updateExamDTO.setDiagnosisId(exam.getDiagnosisId()); // Include the diagnosis ID
+        updateExamDTO.setDiagnosisId(exam.getDiagnosisId());
 
         model.addAttribute("exam", updateExamDTO);
         model.addAttribute("doctors", doctorService.getDoctors());
         model.addAttribute("patients", patientService.getPatients());
-        model.addAttribute("diagnoses", diagnosisService.getDiagnoses()); // Add diagnoses to the model
+        model.addAttribute("diagnoses", diagnosisService.getDiagnoses());
 
         return "/exams/edit-exam";
     }
@@ -102,4 +104,6 @@ public class ExamViewController {
         this.examService.deleteExamination(id);
         return "redirect:/exams";
     }
+
+
 }

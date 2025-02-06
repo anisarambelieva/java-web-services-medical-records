@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class PatientServiceImpl implements PatientService {
     private final PatientRepository patientRepository;
     private final ExamRepository examRepository;
-    private final SickLeaveRepositowry sickLeaveRepository;
+    private final SickLeaveRepository sickLeaveRepository;
     private final MapperUtil mapperUtil;
 
     @Override
@@ -87,7 +87,7 @@ public class PatientServiceImpl implements PatientService {
 
         return exams.stream()
                 .map(exam -> exam.getDiagnosis() != null ? exam.getDiagnosis().getName() : "No Diagnosis")
-                .distinct() // Avoid duplicate diagnoses
+                .distinct()
                 .collect(Collectors.toList());
     }
 
@@ -107,7 +107,7 @@ public class PatientServiceImpl implements PatientService {
                 .map(sickLeave ->
                         "From: " + sickLeave.getStartDate() +
                                 " | Days: " + sickLeave.getCountDays()
-                ) // Format output
+                )
                 .collect(Collectors.toList());
     }
 }

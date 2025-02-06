@@ -52,11 +52,16 @@ public class SickLeaveViewController {
                 })
                 .collect(Collectors.toList());
 
+        String topDoctor = sickLeaveService.getDoctorWithMostSickLeaves();
+
+        String topMonth = sickLeaveService.getMonthWithMostSickLeaves();
+
         model.addAttribute("sickLeaves", sickLeaves);
+        model.addAttribute("topDoctor", topDoctor);
+        model.addAttribute("topMonth", topMonth);
+
         return "/sick-leaves/sick-leaves";
     }
-
-
 
     @GetMapping("/create")
     public String showCreateSickLeaveForm(

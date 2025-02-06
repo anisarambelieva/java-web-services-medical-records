@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body>
+<header th:replace="fragments :: header"></header>
+
+<h4>Doctor Information</h4>
+
+<div class="col-6">
+    <p><strong>Name:</strong> <span th:text="${doctor.name}"></span></p>
+    <p><strong>Specialty:</strong> <span th:text="${doctor.specialty}"></span></p>
+
+    <div class="alert alert-info">
+        <strong>Total Exams Conducted: </strong>
+        <span th:text="${examCount}"></span>
+    </div>
+</div>
+
+<div class="col-6 mt-4">
+    <h3>Exams Conducted</h3>
+    <h5 th:if="${exams.size() == 0}">This doctor has not conducted any exams.</h5>
+    <table th:if="${exams.size() > 0}" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Patient</th>
+            <th>Diagnosis</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="exam : ${exams}">
+            <td th:text="${exam.date}"></td>
+            <td th:text="${exam.patientName}"></td>
+            <td th:text="${exam.diagnosisName != null ? exam.diagnosisName : 'No Diagnosis'}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-6 mt-3">
+    <a class="btn btn-secondary" th:href="@{/doctors}">Back to Doctors</a>
+</div>
+
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>
