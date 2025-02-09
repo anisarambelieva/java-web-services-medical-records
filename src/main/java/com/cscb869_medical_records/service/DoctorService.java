@@ -4,6 +4,7 @@ import com.cscb869_medical_records.data.entity.Doctor;
 import com.cscb869_medical_records.dto.doctor.CreateDoctorDTO;
 import com.cscb869_medical_records.dto.doctor.DoctorDTO;
 import com.cscb869_medical_records.dto.doctor.UpdateDoctorDTO;
+import com.cscb869_medical_records.dto.exam.ExamDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -16,4 +17,5 @@ public interface DoctorService {
     void deleteDoctor(long id);
     Doctor findDoctorWithMostSickLeaves();
     Map<Long, Integer> getNumberOfExamsPerDoctor();
+    List<ExamDTO> getExamsByDoctor(long doctorId);
 }

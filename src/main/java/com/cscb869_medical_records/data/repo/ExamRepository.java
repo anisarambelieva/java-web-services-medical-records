@@ -16,4 +16,12 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
     void updateDiagnosisToNull(@Param("diagnosisId") Long diagnosisId);
 
     List<Exam> findByPatientId(Long patientId);
+
+    @Query("SELECT e.diagnosis.name, COUNT(e.diagnosis) FROM Exam e GROUP BY e.diagnosis ORDER BY COUNT(e.diagnosis) DESC")
+    List<Object[]> findMostCommonDiagnosis();
+
+    @Query("SELECT COUNT(e) FROM Exam e WHERE e.doctor.id = :doctorId")
+    int countByDoctorId(@Param("doctorId") long doctorId);
+
+    List<Exam> findByDoctorId(Long doctorId);
 }

@@ -3,8 +3,20 @@
 <head th:replace="fragments :: head"></head>
 <body>
 <header th:replace="fragments :: header"></header>
+
 <div class="container mt-4">
   <h4>All Sick Leaves</h4>
+
+  <div class="alert alert-info">
+    <strong>Doctor who issued most sick leaves: </strong>
+    <span th:text="${topDoctor != null ? topDoctor : 'No sick leaves issued yet'}"></span>
+  </div>
+
+  <div class="alert alert-info mt-2">
+    <strong>Month with most sick leaves issued: </strong>
+    <span th:text="${topMonth != null ? topMonth : 'No sick leaves issued yet'}"></span>
+  </div>
+
   <div class="col-12">
     <h3 th:unless="${sickLeaves} and ${sickLeaves.size()}">There are no sick leaves!</h3>
     <table th:if="${sickLeaves.size() > 0}" class="table table-hover">

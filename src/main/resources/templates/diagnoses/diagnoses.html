@@ -13,6 +13,7 @@
             <th>Name</th>
             <th>Edit</th>
             <th>Delete</th>
+            <th>Info</th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +25,9 @@
             </td>
             <td>
                 <a class="btn btn-danger" th:href="@{'/diagnoses/delete/'+${diagnosis.id}}">Delete</a>
+            </td>
+            <td>
+                <a th:href="@{/diagnoses/{id}/info(id=${diagnosis.id})}" class="btn btn-info">Info</a>
             </td>
         </tr>
         </tbody>

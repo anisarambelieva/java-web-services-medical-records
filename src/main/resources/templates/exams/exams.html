@@ -5,6 +5,12 @@
 <header th:replace="fragments :: header"></header>
 <div class="container mt-4">
     <h4>All Exams</h4>
+
+    <div class="alert alert-info">
+        <strong>Most Common Diagnosis: </strong>
+        <span th:text="${mostCommonDiagnosis != null ? mostCommonDiagnosis : 'No diagnoses assigned yet'}"></span>
+    </div>
+
     <div class="col-12">
         <h3 th:unless="${exams} and ${exams.size()}">There are no exams!</h3>
         <table th:if="${exams.size() > 0}" class="table table-hover">

@@ -12,4 +12,6 @@ public interface SickLeaveService {
     CreateSickLeaveDTO createSickLeave(CreateSickLeaveDTO leave);
     UpdateSickLeaveDTO updateSickLeave(long id, UpdateSickLeaveDTO leave);
     void deleteSickLeave(long id);
+    String getDoctorWithMostSickLeaves();
+    String getMonthWithMostSickLeaves();
 }

@@ -121,4 +121,22 @@ public class ExamServiceImpl implements ExamService {
                 exam.getDiagnosis() != null ? exam.getDiagnosis().getId() : null
         );
     }
+
+    @Override
+    public String getMostCommonDiagnosis() {
+        List<Object[]> result = examRepository.findMostCommonDiagnosis();
+        return result.isEmpty() ? "No diagnoses assigned yet" : (String) result.get(0)[0];
+    }
+
+    @Override
+    public int getExamCountByDoctor(long doctorId) {
+        return examRepository.countByDoctorId(doctorId);
+    }
+
+    @Override
+    public List<ExamDTO> getExaminationsByDoctor(Long doctorId) {
+        return examRepository.findByDoctorId(doctorId).stream()
+                .map(exam -> mapperUtil.getModelMapper().map(exam, ExamDTO.class))
+                .collect(Collectors.toList());
+    }
 }
