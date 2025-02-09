@@ -23,6 +23,11 @@
             <span class="text-danger" th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}">Specialty Error</span>
         </div>
 
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="gp" th:field="*{gp}">
+            <label class="form-check-label" for="gp">Is GP?</label>
+        </div>
+
         <button type="submit" class="btn btn-primary">Save Doctor</button>
     </form>
 </div>

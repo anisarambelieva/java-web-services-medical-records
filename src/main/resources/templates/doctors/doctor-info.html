@@ -10,6 +10,11 @@
     <p><strong>Name:</strong> <span th:text="${doctor.name}"></span></p>
     <p><strong>Specialty:</strong> <span th:text="${doctor.specialty}"></span></p>
 
+    <p><strong>GP Status:</strong>
+        <span th:if="${doctor.gp}" class="text-success">General Practitioner (GP)</span>
+        <span th:if="${!doctor.gp}" class="text-danger">Not a GP</span>
+    </p>
+
     <div class="alert alert-info">
         <strong>Total Exams Conducted: </strong>
         <span th:text="${examCount}"></span>
@@ -35,6 +40,14 @@
         </tr>
         </tbody>
     </table>
+</div>
+
+<div class="col-6 mt-4">
+    <h3>GP Patients</h3>
+    <h5 th:if="${doctor.gpPatients.size() == 0}">This doctor is not a GP for any patients.</h5>
+    <ul th:if="${doctor.gpPatients.size() > 0}">
+        <li th:each="patient : ${doctor.gpPatients}" th:text="${patient}"></li>
+    </ul>
 </div>
 
 <div class="col-6 mt-3">

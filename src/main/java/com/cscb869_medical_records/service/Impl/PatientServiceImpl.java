@@ -1,7 +1,9 @@
 package com.cscb869_medical_records.service.Impl;
 
+import com.cscb869_medical_records.data.entity.Doctor;
 import com.cscb869_medical_records.data.entity.Exam;
 import com.cscb869_medical_records.data.entity.Patient;
+import com.cscb869_medical_records.data.repo.DoctorRepository;
 import com.cscb869_medical_records.data.repo.ExamRepository;
 import com.cscb869_medical_records.data.repo.PatientRepository;
 import com.cscb869_medical_records.data.repo.SickLeaveRepository;
@@ -21,6 +23,7 @@ public class PatientServiceImpl implements PatientService {
     private final PatientRepository patientRepository;
     private final ExamRepository examRepository;
     private final SickLeaveRepository sickLeaveRepository;
+    private final DoctorRepository doctorRepository;
     private final MapperUtil mapperUtil;
 
     @Override
@@ -65,16 +68,26 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public UpdatePatientDTO updatePatient(UpdatePatientDTO patient, long id) {
-        return mapperUtil.getModelMapper()
-                .map(this.patientRepository.findById(id)
-                        .map(patient1 -> {
-                            patient1.setName(patient.getName());
-                            patient1.setPin(patient.getPin());
-                            patient1.setPaidInsuranceDate(patient.getPaidInsuranceDate());
-                            return this.patientRepository.save(patient1);
-                        }), UpdatePatientDTO.class);
+    public UpdatePatientDTO updatePatient(UpdatePatientDTO updatePatientDTO, long id) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patient with id=" + id + " not found!"));
+
+        patient.setName(updatePatientDTO.getName());
+        patient.setPin(updatePatientDTO.getPin());
+        patient.setPaidInsuranceDate(updatePatientDTO.getPaidInsuranceDate());
+
+        System.out.println("Received GP ID: " + updatePatientDTO.getGpId());
+
+        if (updatePatientDTO.getGpId() != null) {
+            Doctor newGp = doctorRepository.findById(updatePatientDTO.getGpId())
+                    .orElseThrow(() -> new RuntimeException("Doctor with id=" + updatePatientDTO.getGpId() + " not found!"));
+            patient.setGp(newGp);
+        }
+
+        patientRepository.save(patient);
+        return mapperUtil.getModelMapper().map(patient, UpdatePatientDTO.class);
     }
+
 
     @Override
     public void deletePatient(long id) {

@@ -17,4 +17,6 @@ public class CreateDoctorDTO {
     private String name;
 
     private Specialty specialty;
+
+    private boolean gp;
 }

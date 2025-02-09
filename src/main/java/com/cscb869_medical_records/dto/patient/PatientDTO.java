@@ -1,5 +1,7 @@
 package com.cscb869_medical_records.dto.patient;
 
+import com.cscb869_medical_records.data.entity.Doctor;
+import com.cscb869_medical_records.dto.doctor.DoctorDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -27,4 +29,5 @@ public class PatientDTO {
     private List<String> diagnoses;
     private List<String> doctorsVisited;
     private List<String> sickLeaves;
+    private DoctorDTO gp;
 }
