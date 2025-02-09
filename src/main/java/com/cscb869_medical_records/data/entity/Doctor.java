@@ -1,6 +1,7 @@
 package com.cscb869_medical_records.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
@@ -32,4 +33,19 @@ public class Doctor extends BaseEntity {
     @OneToMany
     @JsonIgnore
     private Set<SickLeave> sickLeaves;
+
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean gp;
+
+    @OneToMany(mappedBy = "gp")
+    @JsonIgnore
+    private Set<Patient> gpPatients;
+
+    public boolean isGp() {
+        return gp;
+    }
+
+    public void setGp(boolean gp) {
+        this.gp = gp;
+    }
 }

@@ -21,6 +21,18 @@
             <input class="form-control" type="date" th:field="*{paidInsuranceDate}" id="paidInsuranceDate">
         </div>
 
+        <div class="form-group">
+            <label for="gp">Select GP</label>
+            <select class="form-control" id="gp" th:field="*{gpId}">
+                <option value="" disabled>Select a GP</option>
+                <option th:each="gpDoctor : ${gpDoctors}"
+                        th:value="${gpDoctor.id}"
+                        th:text="${gpDoctor.name}">
+                </option>
+            </select>
+        </div>
+
+
         <button type="submit" class="btn btn-primary">Update Patient</button>
     </form>
 </div>

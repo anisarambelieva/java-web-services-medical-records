@@ -17,4 +17,6 @@ public class CreateDoctorViewModel {
     private String name;
 
     private Specialty specialty;
+
+    private boolean gp;
 }

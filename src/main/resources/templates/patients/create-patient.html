@@ -18,6 +18,18 @@
             <span class="text-danger" th:if="${#fields.hasErrors('pin')}" th:errors="*{pin}">PIN Error</span>
         </div>
 
+        <div class="form-group">
+            <label for="gp">Select GP</label>
+            <select class="form-control" id="gp" th:field="*{gp}">
+                <option value="" disabled selected>Select a GP</option>
+                <option th:each="gpDoctor : ${gpDoctors}"
+                        th:value="${gpDoctor.id}"
+                        th:text="${gpDoctor.name}">
+                </option>
+            </select>
+            <span class="text-danger" th:if="${#fields.hasErrors('gp')}" th:errors="*{gp}">GP Error</span>
+        </div>
+
         <button type="submit" class="btn btn-primary">Save Patient</button>
     </form>
 </div>

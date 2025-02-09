@@ -18,4 +18,6 @@ public class DoctorDTO {
     private String name;
 
     private Specialty specialty;
+
+    private boolean gp;
 }

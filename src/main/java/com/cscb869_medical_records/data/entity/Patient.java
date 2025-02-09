@@ -41,4 +41,7 @@ public class Patient extends BaseEntity {
     @OneToMany
     @JsonIgnore
     private Set<SickLeave> sickLeaves;
+
+    @ManyToOne(optional = false)
+    private Doctor gp;
 }

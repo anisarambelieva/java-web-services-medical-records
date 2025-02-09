@@ -10,6 +10,7 @@ import com.cscb869_medical_records.dto.exam.ExamDTO;
 import com.cscb869_medical_records.service.DoctorService;
 import com.cscb869_medical_records.util.MapperUtil;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -120,4 +121,12 @@ public class DoctorServiceImpl implements DoctorService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<DoctorDTO> getGpDoctors() {
+    List<Doctor> gpDoctors = doctorRepository.findByGpTrue();
+
+    return gpDoctors.stream()
+            .map(doctor -> mapperUtil.getModelMapper().map(doctor, DoctorDTO.class))
+            .collect(Collectors.toList());
+    }
 }

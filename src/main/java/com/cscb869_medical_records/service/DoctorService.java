@@ -18,4 +18,5 @@ public interface DoctorService {
     Doctor findDoctorWithMostSickLeaves();
     Map<Long, Integer> getNumberOfExamsPerDoctor();
     List<ExamDTO> getExamsByDoctor(long doctorId);
+    List<DoctorDTO> getGpDoctors();
 }
