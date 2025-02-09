@@ -42,6 +42,14 @@
     </table>
 </div>
 
+<div class="col-6 mt-4">
+    <h3>GP Patients</h3>
+    <h5 th:if="${doctor.gpPatients.size() == 0}">This doctor is not a GP for any patients.</h5>
+    <ul th:if="${doctor.gpPatients.size() > 0}">
+        <li th:each="patient : ${doctor.gpPatients}" th:text="${patient}"></li>
+    </ul>
+</div>
+
 <div class="col-6 mt-3">
     <a class="btn btn-secondary" th:href="@{/doctors}">Back to Doctors</a>
 </div>

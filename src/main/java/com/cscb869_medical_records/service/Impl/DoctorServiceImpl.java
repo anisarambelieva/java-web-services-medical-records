@@ -1,6 +1,7 @@
 package com.cscb869_medical_records.service.Impl;
 
 import com.cscb869_medical_records.data.entity.Doctor;
+import com.cscb869_medical_records.data.entity.Patient;
 import com.cscb869_medical_records.data.repo.DoctorRepository;
 import com.cscb869_medical_records.data.repo.ExamRepository;
 import com.cscb869_medical_records.dto.doctor.CreateDoctorDTO;
@@ -10,7 +11,6 @@ import com.cscb869_medical_records.dto.exam.ExamDTO;
 import com.cscb869_medical_records.service.DoctorService;
 import com.cscb869_medical_records.util.MapperUtil;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class DoctorServiceImpl implements DoctorService {
         return this.mapperUtil.getModelMapper().map(
                 this.doctorRepository
                         .findById(id).orElseThrow(()
-                                -> new RuntimeException("Doctor with id=" + id + " not found!" )), DoctorDTO.class);
+                                -> new RuntimeException("Doctor with id=" + id + " not found!")), DoctorDTO.class);
     }
 
     @Override
@@ -59,7 +59,6 @@ public class DoctorServiceImpl implements DoctorService {
 
         return mapperUtil.getModelMapper().map(updatedDoctor, UpdateDoctorDTO.class);
     }
-
 
     @Override
     public void deleteDoctor(long id) {
@@ -85,11 +84,9 @@ public class DoctorServiceImpl implements DoctorService {
         if (topDoctor != null) {
             System.out.println("Doctor with most sick leaves: "
                     + topDoctor.getName() + ", Count: " + maxSickLeaves);
-
             return topDoctor;
         }
 
-        // TODO Handle this
         return null;
     }
 
@@ -123,10 +120,24 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<DoctorDTO> getGpDoctors() {
-    List<Doctor> gpDoctors = doctorRepository.findByGpTrue();
+        List<Doctor> gpDoctors = doctorRepository.findByGpTrue();
 
-    return gpDoctors.stream()
-            .map(doctor -> mapperUtil.getModelMapper().map(doctor, DoctorDTO.class))
-            .collect(Collectors.toList());
+        return gpDoctors.stream()
+                .map(doctor -> mapperUtil.getModelMapper().map(doctor, DoctorDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public DoctorDTO getDoctorWithGpPatients(long id) {
+        Doctor doctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor with id=" + id + " not found!"));
+
+        DoctorDTO doctorDTO = mapperUtil.getModelMapper().map(doctor, DoctorDTO.class);
+        doctorDTO.setGpPatients(doctor.getGpPatients()
+                .stream()
+                .map(Patient::getName)
+                .collect(Collectors.toList()));
+
+        return doctorDTO;
     }
 }

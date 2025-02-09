@@ -1,6 +1,5 @@
 package com.cscb869_medical_records.web.view.controller;
 
-import com.cscb869_medical_records.data.entity.Doctor;
 import com.cscb869_medical_records.data.entity.Specialty;
 import com.cscb869_medical_records.dto.doctor.CreateDoctorDTO;
 import com.cscb869_medical_records.dto.doctor.DoctorDTO;
@@ -38,37 +37,36 @@ public class DoctorViewController {
 
     @GetMapping("/create-doctor")
     public String showCreateDoctorForm(Model model) {
-        model.addAttribute("doctor", new Doctor()); // Add an empty doctor object for the form
-        model.addAttribute("specialties", Specialty.values()); // Populate specialties in the dropdown
+        model.addAttribute("doctor", new CreateDoctorViewModel());
+        model.addAttribute("specialties", Specialty.values());
         return "/doctors/create-doctor";
     }
 
     @PostMapping("/create")
     public String createDoctor(@Valid @ModelAttribute("doctor") CreateDoctorViewModel doctor, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            // Re-populate specialties to avoid missing them on re-render
             model.addAttribute("specialties", Specialty.values());
             return "/doctors/create-doctor";
         }
-        this.doctorService
-                .createDoctor(mapperUtil.getModelMapper().map(doctor, CreateDoctorDTO.class));
+        this.doctorService.createDoctor(mapperUtil.getModelMapper().map(doctor, CreateDoctorDTO.class));
         return "redirect:/doctors";
     }
 
     @GetMapping("/edit-doctor/{id}")
     public String showEditDoctorForm(Model model, @PathVariable Long id) {
-        model.addAttribute("doctor", this.doctorService.getDoctor(id));
-        model.addAttribute("specialties", Specialty.values()); // Populate specialties for the dropdown in edit form
+        DoctorDTO doctor = doctorService.getDoctor(id);
+        model.addAttribute("doctor", doctor);
+        model.addAttribute("specialties", Specialty.values());
         return "/doctors/edit-doctor";
     }
 
     @PostMapping("/update/{id}")
-    public String updateDoctor(@PathVariable long id, @Valid @ModelAttribute("doctor") Doctor doctor, BindingResult bindingResult, Model model) {
+    public String updateDoctor(@PathVariable long id, @Valid @ModelAttribute("doctor") UpdateDoctorDTO doctor, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("specialties", Specialty.values());
             return "/doctors/edit-doctor";
         }
-        this.doctorService.updateDoctor(mapperUtil.getModelMapper().map(doctor, UpdateDoctorDTO.class), id);
+        this.doctorService.updateDoctor(doctor, id);
         return "redirect:/doctors";
     }
 
@@ -80,13 +78,14 @@ public class DoctorViewController {
 
     @GetMapping("/{id}/info")
     public String getDoctorInfo(@PathVariable Long id, Model model) {
-        DoctorDTO doctor = doctorService.getDoctor(id);
+        DoctorDTO doctor = doctorService.getDoctorWithGpPatients(id);
         int examCount = examService.getExamCountByDoctor(id);
         List<ExamDTO> exams = examService.getExaminationsByDoctor(id);
 
         model.addAttribute("doctor", doctor);
         model.addAttribute("examCount", examCount);
         model.addAttribute("exams", exams);
+        model.addAttribute("gpPatients", doctor.getGpPatients());
 
         return "/doctors/doctor-info";
     }

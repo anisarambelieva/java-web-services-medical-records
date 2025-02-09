@@ -19,4 +19,5 @@ public interface DoctorService {
     Map<Long, Integer> getNumberOfExamsPerDoctor();
     List<ExamDTO> getExamsByDoctor(long doctorId);
     List<DoctorDTO> getGpDoctors();
+    DoctorDTO getDoctorWithGpPatients(long id);
 }

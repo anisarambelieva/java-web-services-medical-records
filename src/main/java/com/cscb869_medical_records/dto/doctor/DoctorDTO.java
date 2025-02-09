@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -20,4 +22,6 @@ public class DoctorDTO {
     private Specialty specialty;
 
     private boolean gp;
+
+    private List<String> gpPatients;
 }
